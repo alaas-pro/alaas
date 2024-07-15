@@ -10,17 +10,17 @@ const IndexPage = ({ data }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    const uniqueCategories = Array.from(new Set(allPosts.flatMap(post => post.node.frontmatter.categories)));
-    const uniqueTags = Array.from(new Set(allPosts.flatMap(post => post.node.frontmatter.tags)));
+    const uniqueCategories = Array.from(new Set(allPosts.flatMap(post => post.node.frontmatter.categories || [])));
+    const uniqueTags = Array.from(new Set(allPosts.flatMap(post => post.node.frontmatter.tags || [])));
     setCategories(uniqueCategories);
     setTags(uniqueTags);
   }, [allPosts]);
 
   const handleFilter = (filter, type) => {
     if (type === 'category') {
-      setFilteredPosts(allPosts.filter(post => post.node.frontmatter.categories.includes(filter)));
+      setFilteredPosts(allPosts.filter(post => post.node.frontmatter.categories && post.node.frontmatter.categories.includes(filter)));
     } else if (type === 'tag') {
-      setFilteredPosts(allPosts.filter(post => post.node.frontmatter.tags.includes(filter)));
+      setFilteredPosts(allPosts.filter(post => post.node.frontmatter.tags && post.node.frontmatter.tags.includes(filter)));
     } else {
       setFilteredPosts(allPosts);
     }
@@ -31,7 +31,7 @@ const IndexPage = ({ data }) => {
     setFilteredPosts(allPosts.filter(post =>
       post.node.frontmatter.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
       post.node.frontmatter.description.toLowerCase().includes(e.target.value.toLowerCase()) ||
-      post.node.frontmatter.tags.join(' ').toLowerCase().includes(e.target.value.toLowerCase()) ||
+      (post.node.frontmatter.tags && post.node.frontmatter.tags.join(' ').toLowerCase().includes(e.target.value.toLowerCase())) ||
       post.node.html.toLowerCase().includes(e.target.value.toLowerCase())
     ));
   };
@@ -64,8 +64,8 @@ const IndexPage = ({ data }) => {
           <li key={node.fields.slug}>
             <a href={node.fields.slug}>{node.frontmatter.title}</a>
             <p>{node.frontmatter.description}</p>
-            <p>{node.frontmatter.categories.join(', ')}</p>
-            <p>{node.frontmatter.tags.join(', ')}</p>
+            <p>{node.frontmatter.categories ? node.frontmatter.categories.join(', ') : 'No categories'}</p>
+            <p>{node.frontmatter.tags ? node.frontmatter.tags.join(', ') : 'No tags'}</p>
           </li>
         ))}
       </ul>
