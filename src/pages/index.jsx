@@ -1,85 +1,98 @@
+import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
-import get from 'lodash/get';
-import React from 'react';
-
-import Header from '../components/header';
 import Layout from '../components/layout';
-import SectionAbout from '../components/section-about';
-import SectionBlog from '../components/section-blog';
-import SectionExperience from '../components/section-experience';
-import SectionProjects from '../components/section-projects';
-import SectionSkills from '../components/section-skills';
-import SEO from '../components/seo';
 
-const Index = ({ data }) => {
-  const about = get(data, 'site.siteMetadata.about', false);
-  const projects = get(data, 'site.siteMetadata.projects', false);
-  const posts = data.allMarkdownRemark.edges;
-  const experience = get(data, 'site.siteMetadata.experience', false);
-  const skills = get(data, 'site.siteMetadata.skills', false);
-  const noBlog = !posts || !posts.length;
+const IndexPage = ({ data }) => {
+  const allPosts = data.allMarkdownRemark.edges;
+  const [filteredPosts, setFilteredPosts] = useState(allPosts);
+  const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    const uniqueCategories = Array.from(new Set(allPosts.flatMap(post => post.node.frontmatter.categories)));
+    const uniqueTags = Array.from(new Set(allPosts.flatMap(post => post.node.frontmatter.tags)));
+    setCategories(uniqueCategories);
+    setTags(uniqueTags);
+  }, [allPosts]);
+
+  const handleFilter = (filter, type) => {
+    if (type === 'category') {
+      setFilteredPosts(allPosts.filter(post => post.node.frontmatter.categories.includes(filter)));
+    } else if (type === 'tag') {
+      setFilteredPosts(allPosts.filter(post => post.node.frontmatter.tags.includes(filter)));
+    } else {
+      setFilteredPosts(allPosts);
+    }
+  };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    setFilteredPosts(allPosts.filter(post =>
+      post.node.frontmatter.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
+      post.node.frontmatter.description.toLowerCase().includes(e.target.value.toLowerCase()) ||
+      post.node.frontmatter.tags.join(' ').toLowerCase().includes(e.target.value.toLowerCase()) ||
+      post.node.html.toLowerCase().includes(e.target.value.toLowerCase())
+    ));
+  };
 
   return (
     <Layout>
-      <SEO />
-      <Header metadata={data.site.siteMetadata} noBlog={noBlog} />
-      {about && <SectionAbout about={about} />}
-      {projects && projects.length && <SectionProjects projects={projects} />}
-      {!noBlog && <SectionBlog posts={posts} />}
-      {experience && experience.length && (
-        <SectionExperience experience={experience} />
-      )}
-      {skills && skills.length && <SectionSkills skills={skills} />}
+      <h1>Blog Posts</h1>
+      <input
+        type="text"
+        placeholder="Search posts..."
+        value={searchTerm}
+        onChange={handleSearch}
+      />
+      <div>
+        <h2>Categories</h2>
+        <button onClick={() => handleFilter('All', 'category')}>All</button>
+        {categories.map(category => (
+          <button key={category} onClick={() => handleFilter(category, 'category')}>{category}</button>
+        ))}
+      </div>
+      <div>
+        <h2>Tags</h2>
+        <button onClick={() => handleFilter('All', 'tag')}>All</button>
+        {tags.map(tag => (
+          <button key={tag} onClick={() => handleFilter(tag, 'tag')}>{tag}</button>
+        ))}
+      </div>
+      <ul>
+        {filteredPosts.map(({ node }) => (
+          <li key={node.fields.slug}>
+            <a href={node.fields.slug}>{node.frontmatter.title}</a>
+            <p>{node.frontmatter.description}</p>
+            <p>{node.frontmatter.categories.join(', ')}</p>
+            <p>{node.frontmatter.tags.join(', ')}</p>
+          </li>
+        ))}
+      </ul>
     </Layout>
   );
 };
 
-export default Index;
-
-export const pageQuery = graphql`
+export const query = graphql`
   query {
-    site {
-      siteMetadata {
-        name
-        title
-        description
-        about
-        author
-        github
-        linkedin
-        projects {
-          name
-          description
-          link
-        }
-        experience {
-          name
-          description
-          link
-        }
-        skills {
-          name
-          description
-        }
-      }
-    }
-    allMarkdownRemark(
-      sort: { fields: [frontmatter___date], order: DESC }
-      limit: 5
-    ) {
+    allMarkdownRemark {
       edges {
         node {
-          excerpt
+          frontmatter {
+            title
+            description
+            date
+            categories
+            tags
+          }
           fields {
             slug
           }
-          frontmatter {
-            date(formatString: "MMMM DD, YYYY")
-            title
-            description
-          }
+          html
         }
       }
     }
   }
 `;
+
+export default IndexPage;
