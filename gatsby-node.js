@@ -18,6 +18,8 @@ exports.createPages = async ({ graphql, actions }) => {
             }
             frontmatter {
               title
+              categories
+              tags
             }
           }
         }
@@ -29,7 +31,6 @@ exports.createPages = async ({ graphql, actions }) => {
     throw result.errors;
   }
 
-  // Create blog post pages.
   const posts = result.data.allMarkdownRemark.edges;
 
   posts.forEach((post, index) => {
@@ -43,6 +44,8 @@ exports.createPages = async ({ graphql, actions }) => {
         slug: post.node.fields.slug,
         previous,
         next,
+        categories: post.node.frontmatter.categories,
+        tags: post.node.frontmatter.tags,
       },
     });
   });
@@ -64,26 +67,6 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions;
   const typeDefs = `
-    type SiteSiteMetadata {
-      siteUrl: String
-      name: String
-      title: String
-      description: String
-      author: String
-      github: String
-      linkedin: String
-      about: String
-      projects: [SectionItem]
-      experience: [SectionItem]
-      skills: [SectionItem]
-    }
-
-    type SectionItem {
-      name: String!
-      description: String!
-      link: String!
-    }
-
     type MarkdownRemark implements Node {
       frontmatter: Frontmatter
       fields: Fields
@@ -93,6 +76,8 @@ exports.createSchemaCustomization = ({ actions }) => {
       title: String
       description: String
       date: Date @dateformat
+      categories: [String]
+      tags: [String]
     }
     
     type Fields {
