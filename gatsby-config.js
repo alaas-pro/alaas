@@ -5,9 +5,9 @@ module.exports = {
     // Your Name
     name: 'Alaa S',
     // Main Site Title
-    title: `AlaaS.ca`,
+    title: `AlaaS.pro`,
     // Description that goes under your name in main bio
-    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit, ipsum.`,
+    description: `Tech nerd looking for a new opportunities`,
     // Optional: Twitter account handle
     author: `@rfitzio`,
     // Optional: Github account URL
