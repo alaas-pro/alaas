@@ -1,5 +1,5 @@
 import { graphql } from 'gatsby';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import BlogPosts from '../components/blog-posts';
 import Header from '../components/header';
@@ -7,11 +7,42 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 import NotFound from '../pages/404';
 
-const Index = ({ data }) => {
-  const posts = data.allMarkdownRemark.edges;
-  const noBlog = !posts || !posts.length;
+const BlogPage = ({ data }) => {
+  const allPosts = data.allMarkdownRemark.edges;
+  const [filteredPosts, setFilteredPosts] = useState(allPosts);
+  const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const noBlog = !allPosts || !allPosts.length;
 
-  if (!posts || !posts.length) {
+  useEffect(() => {
+    const uniqueCategories = Array.from(new Set(allPosts.flatMap(post => post.node.frontmatter.categories || [])));
+    const uniqueTags = Array.from(new Set(allPosts.flatMap(post => post.node.frontmatter.tags || [])));
+    setCategories(uniqueCategories);
+    setTags(uniqueTags);
+  }, [allPosts]);
+
+  const handleFilter = (filter, type) => {
+    if (type === 'category') {
+      setFilteredPosts(allPosts.filter(post => post.node.frontmatter.categories && post.node.frontmatter.categories.includes(filter)));
+    } else if (type === 'tag') {
+      setFilteredPosts(allPosts.filter(post => post.node.frontmatter.tags && post.node.frontmatter.tags.includes(filter)));
+    } else {
+      setFilteredPosts(allPosts);
+    }
+  };
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    setFilteredPosts(allPosts.filter(post =>
+      post.node.frontmatter.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
+      post.node.frontmatter.description.toLowerCase().includes(e.target.value.toLowerCase()) ||
+      (post.node.frontmatter.tags && post.node.frontmatter.tags.join(' ').toLowerCase().includes(e.target.value.toLowerCase())) ||
+      post.node.html.toLowerCase().includes(e.target.value.toLowerCase())
+    ));
+  };
+
+  if (noBlog) {
     return <NotFound />;
   }
 
@@ -19,12 +50,34 @@ const Index = ({ data }) => {
     <Layout>
       <SEO title="Blog" />
       <Header metadata={data.site.siteMetadata} />
-      {!noBlog && <BlogPosts posts={posts} />}
+      <div>
+        <input
+          type="text"
+          placeholder="Search posts..."
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+        <div>
+          <h2>Categories</h2>
+          <button onClick={() => handleFilter('All', 'category')}>All</button>
+          {categories.map(category => (
+            <button key={category} onClick={() => handleFilter(category, 'category')}>{category}</button>
+          ))}
+        </div>
+        <div>
+          <h2>Tags</h2>
+          <button onClick={() => handleFilter('All', 'tag')}>All</button>
+          {tags.map(tag => (
+            <button key={tag} onClick={() => handleFilter(tag, 'tag')}>{tag}</button>
+          ))}
+        </div>
+      </div>
+      {!noBlog && <BlogPosts posts={filteredPosts} />}
     </Layout>
   );
 };
 
-export default Index;
+export default BlogPage;
 
 export const pageQuery = graphql`
   query {
@@ -50,7 +103,10 @@ export const pageQuery = graphql`
             date(formatString: "MMMM DD, YYYY")
             title
             description
+            categories
+            tags
           }
+          html
         }
       }
     }
