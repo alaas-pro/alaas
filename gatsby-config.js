@@ -39,24 +39,17 @@ module.exports = {
     ],
     // Optional: List your experience, they must have `name` and `description`. `link` is optional.
     experience: [
-      {comming soon}
+      {
+         name: 'Coming Soon',
+        description: 'More details about my professional experience will be available soon.',
+      }
     ],
     // Optional: List your skills, they must have `name` and `description`.
     skills: [
       {
-        name: 'Languages & Frameworks',
-        description:
-          'JavaScript (ES6+), Golang, Node.js, Express.js, React, Ruby on Rails, PHP',
-      },
-      {
-        name: 'Databases',
-        description: 'MongoDB, PostreSQL, MySQL',
-      },
-      {
-        name: 'Other',
-        description:
-          'Docker, Amazon Web Services (AWS), CI / CD, Microservices, API design, Agile / Scrum',
-      },
+         name: 'Coming Soon',
+        description: 'More details about my skills will be available soon.',
+      }
     ],
   },
   plugins: [
