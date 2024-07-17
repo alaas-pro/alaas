@@ -22,7 +22,7 @@ module.exports = {
          name: 'Coming Soon',
         description: 
           'More details about my professional experience will be available soon.',
-      }
+      },
     ],
     // Optional: List your experience, they must have `name` and `description`. `link` is optional.
     experience: [
@@ -30,7 +30,7 @@ module.exports = {
          name: 'Coming Soon',
         description: 
           'More details about my professional experience will be available soon.',
-      }
+      },
     ],
     // Optional: List your skills, they must have `name` and `description`.
     skills: [
@@ -38,7 +38,7 @@ module.exports = {
          name: 'Coming Soon',
         description: 
           'More details about my skills will be available soon.',
-      }
+      },
     ],
   },
   plugins: [
