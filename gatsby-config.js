@@ -9,9 +9,9 @@ module.exports = {
     // Description that goes under your name in main bio
     description: `Tech nerd looking for a new opportunities`,
     // Optional: Twitter account handle
-    author: `@rfitzio`,
+    author: `@alaas`,
     // Optional: Github account URL
-    github: `https://github.com/ryanfitzgerald`,
+    github: `https://github.com/alaas-pro`,
     // Optional: LinkedIn account URL
     linkedin: `https://www.linkedin.com/in/alaass/`,
     // Content of the About Me section
@@ -39,21 +39,7 @@ module.exports = {
     ],
     // Optional: List your experience, they must have `name` and `description`. `link` is optional.
     experience: [
-      {
-        name: 'Acme Corp',
-        description: 'Full-Stack Developer, February 2020 - Present',
-        link: 'https://github.com/RyanFitzgerald/devfolio',
-      },
-      {
-        name: 'Globex Corp',
-        description: 'Full-Stack Developer, December 2017 - February 2020',
-        link: 'https://github.com/RyanFitzgerald/devfolio',
-      },
-      {
-        name: 'Hooli',
-        description: 'Full-Stack Developer, May 2015 - December 2017',
-        link: 'https://github.com/RyanFitzgerald/devfolio',
-      },
+      comming soon
     ],
     // Optional: List your skills, they must have `name` and `description`.
     skills: [
