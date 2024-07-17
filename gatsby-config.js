@@ -39,7 +39,7 @@ module.exports = {
     ],
     // Optional: List your experience, they must have `name` and `description`. `link` is optional.
     experience: [
-      comming soon
+      {comming soon}
     ],
     // Optional: List your skills, they must have `name` and `description`.
     skills: [
