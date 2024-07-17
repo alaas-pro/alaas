@@ -9,7 +9,7 @@ module.exports = {
     // Description that goes under your name in main bio
     description: `Tech nerd looking for a new opportunities`,
     // Optional: Twitter account handle
-    author: `https://medium.com/@alaasalawda123`,
+    author: `https://alaass.medium.com/`,
     // Optional: Github account URL
     github: `https://github.com/alaas-pro`,
     // Optional: LinkedIn account URL
@@ -41,14 +41,16 @@ module.exports = {
     experience: [
       {
          name: 'Coming Soon',
-        description: 'More details about my professional experience will be available soon.',
+        description: 
+          'More details about my professional experience will be available soon.',
       }
     ],
     // Optional: List your skills, they must have `name` and `description`.
     skills: [
       {
          name: 'Coming Soon',
-        description: 'More details about my skills will be available soon.',
+        description: 
+          'More details about my skills will be available soon.',
       }
     ],
   },
