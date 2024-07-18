@@ -11,24 +11,19 @@ const BlogPage = ({ data }) => {
   const allPosts = data.allMarkdownRemark.edges;
   const [filteredPosts, setFilteredPosts] = useState(allPosts);
   const [categories, setCategories] = useState([]);
-  const [tags, setTags] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const noBlog = !allPosts || !allPosts.length;
 
   useEffect(() => {
     const uniqueCategories = Array.from(new Set(allPosts.flatMap(post => post.node.frontmatter.categories || [])));
-    const uniqueTags = Array.from(new Set(allPosts.flatMap(post => post.node.frontmatter.tags || [])));
     setCategories(uniqueCategories);
-    setTags(uniqueTags);
   }, [allPosts]);
 
-  const handleFilter = (filter, type) => {
-    if (type === 'category') {
-      setFilteredPosts(allPosts.filter(post => post.node.frontmatter.categories && post.node.frontmatter.categories.includes(filter)));
-    } else if (type === 'tag') {
-      setFilteredPosts(allPosts.filter(post => post.node.frontmatter.tags && post.node.frontmatter.tags.includes(filter)));
-    } else {
+  const handleFilter = (filter) => {
+    if (filter === 'All') {
       setFilteredPosts(allPosts);
+    } else {
+      setFilteredPosts(allPosts.filter(post => post.node.frontmatter.categories.includes(filter)));
     }
   };
 
@@ -37,7 +32,6 @@ const BlogPage = ({ data }) => {
     setFilteredPosts(allPosts.filter(post =>
       post.node.frontmatter.title.toLowerCase().includes(e.target.value.toLowerCase()) ||
       post.node.frontmatter.description.toLowerCase().includes(e.target.value.toLowerCase()) ||
-      (post.node.frontmatter.tags && post.node.frontmatter.tags.join(' ').toLowerCase().includes(e.target.value.toLowerCase())) ||
       post.node.html.toLowerCase().includes(e.target.value.toLowerCase())
     ));
   };
@@ -59,16 +53,9 @@ const BlogPage = ({ data }) => {
         />
         <div>
           <h2>Categories</h2>
-          <button onClick={() => handleFilter('All', 'category')}>All</button>
+          <button onClick={() => handleFilter('All')}>All</button>
           {categories.map(category => (
-            <button key={category} onClick={() => handleFilter(category, 'category')}>{category}</button>
-          ))}
-        </div>
-        <div>
-          <h2>Tags</h2>
-          <button onClick={() => handleFilter('All', 'tag')}>All</button>
-          {tags.map(tag => (
-            <button key={tag} onClick={() => handleFilter(tag, 'tag')}>{tag}</button>
+            <button key={category} onClick={() => handleFilter(category)}>{category}</button>
           ))}
         </div>
       </div>
@@ -104,7 +91,6 @@ export const pageQuery = graphql`
             title
             description
             categories
-            tags
           }
           html
         }
