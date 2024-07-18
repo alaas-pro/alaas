@@ -9,7 +9,7 @@ module.exports = {
     // Description that goes under your name in main bio
     description: `Tech nerd looking for new opportunities.`,
     // Optional: Twitter account handle
-    author: `@rfitzio`,
+    medium: `https://alaass.medium.com/`,
     // Optional: Github account URL
     github: `https://github.com/alaas-pro`,
     // Optional: LinkedIn account URL
