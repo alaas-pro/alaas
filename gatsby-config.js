@@ -11,7 +11,7 @@ module.exports = {
     // Optional: Twitter account handle
     author: `@rfitzio`,
     // Optional: Github account URL
-    github: `https://github.com/alaa-pro`,
+    github: `https://github.com/alaas-pro`,
     // Optional: LinkedIn account URL
     linkedin: `https://www.linkedin.com/in/alaass/`,
     // Content of the About Me section
@@ -19,8 +19,9 @@ module.exports = {
     // Optional: List your projects, they must have `name` and `description`. `link` is optional.
     projects: [
       {
-         name: 'Coming Soon',
+        name: 'Coming Soon',
         description: 'details about my projects will be available soon.',
+        link: 'https://github.com/alaas-pro',
         
       },
       
@@ -28,15 +29,17 @@ module.exports = {
     // Optional: List your experience, they must have `name` and `description`. `link` is optional.
     experience: [
       {
-         name: 'Coming Soon',
+        name: 'Coming Soon',
         description: 'More details about my professional experience will be available soon.',
+        link: 'https://github.com/alaas-pro',
       },
     ],
     // Optional: List your skills, they must have `name` and `description`.
     skills: [
       {
-         name: 'Coming Soon',
+        name: 'Coming Soon',
         description: 'details about my skills will be available soon.',
+        link: 'https://github.com/alaas-pro',
       },
       
     ],
