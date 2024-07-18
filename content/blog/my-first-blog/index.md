@@ -8,7 +8,7 @@ description: 'This article explores how expressive writing might improve your ch
 
 In the competitive job market, innovative strategies to enhance employability are always valuable. One such strategy, supported by research, is expressive writing. This article explores how expressive writing might improve your chances of getting a job by helping you manage the emotional turmoil associated with job loss, perform better in job interviews, and improve your overall psychological well-being.
 
-![writing](./writing.jpg)
+![writing](./write.png)
 
 
 
