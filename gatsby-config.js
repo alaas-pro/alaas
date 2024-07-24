@@ -15,7 +15,11 @@ module.exports = {
     // Optional: LinkedIn account URL
     linkedin: `https://www.linkedin.com/in/alaass/`,
     // Content of the About Me section
-    about: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus perferendis porro cumque ea error ab voluptatem. Temporibus adipisci exercitationem similique itaque quibusdam laudantium, qui molestiae quas, aut amet animi id.`,
+    about: `I am a self-motivated and passionate IT and cybersecurity student, driven by projects and creativity. My approach to learning is hands-on and project-based, 
+    allowing me to apply theoretical concepts in practical, 
+    real-world scenarios. 
+    This method not only deepens my understanding but also fuels my enthusiasm for continuous learning.
+    My commitment to contributing to the cybersecurity landscape is unwavering. I stay abreast of emerging threats and cutting-edge technologies, always seeking new opportunities to expand my knowledge and skill set.`,
     // Optional: List your projects, they must have `name` and `description`. `link` is optional.
     projects: [
       {
