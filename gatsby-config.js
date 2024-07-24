@@ -15,9 +15,12 @@ module.exports = {
     // Optional: LinkedIn account URL
     linkedin: `https://www.linkedin.com/in/alaass/`,
     // Content of the About Me section
-    about: `I am a self-motivated and passionate IT and cybersecurity student, driven by projects and creativity. 
+    about: `I am a self-motivated and passionate IT and cybersecurity student, 
+    driven by projects and creativity. 
+    
     My approach to learning is hands-on and project-based, 
     allowing me to apply theoretical concepts in practical, real-world scenarios. 
+    
     This method not only deepens my understanding but also fuels my enthusiasm for continuous learning.
     My commitment to contributing to the cybersecurity landscape is unwavering.
     I stay abreast of emerging threats and cutting-edge technologies, 
